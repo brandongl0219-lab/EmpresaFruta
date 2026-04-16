@@ -1,32 +1,27 @@
-public class Main {
+import java.util.Collections;
 
+public class Main {
     public static void main(String[] args) {
         Fruta fresa = new Fruta("Fresa", 10.0, 500.0, 1200.0);
+        Fruta mango = new Fruta("Mango", 15.0, 300.0, 900.0);
 
-        PeriodoCosecha verano   = new PeriodoCosecha("Verano",   8.5);  // 8.5 ton/ha
-        PeriodoCosecha otonio   = new PeriodoCosecha("Otoño",    6.0);  // 6.0 ton/ha
-        PeriodoCosecha primavera = new PeriodoCosecha("Primavera", 9.2); // 9.2 ton/ha
+        PeriodoCosecha verano = new PeriodoCosecha("Verano", 8.5);
+        PeriodoCosecha primavera = new PeriodoCosecha("Primavera", 9.2);
 
         fresa.agregarPeriodo(verano);
-        fresa.agregarPeriodo(otonio);
         fresa.agregarPeriodo(primavera);
 
-        System.out.println("=== " + fresa.getNombre() + " ===");
-        System.out.println("Hectáreas : " + fresa.getExtensionHectareas());
-        System.out.println("Periodos  : " + fresa.getPeriodos().size());
-        System.out.println();
-
+        System.out.println("=== REPORTE FRUTA: " + fresa.getNombre() + " ===");
         for (PeriodoCosecha p : fresa.getPeriodos()) {
-            double costo     = fresa.getCostoTotal(p);
-            double ganancias = fresa.getGananciasEstimadas(p);
-            System.out.printf("Periodo: %-12s | Costo total: $%,.2f | Ganancias: $%,.2f%n",
-                    p.getNombre(), costo, ganancias);
+            System.out.printf("Periodo: %-10s | Costo: $%,.2f | Ganancia: $%,.2f%n",
+                    p.getNombre(), fresa.getCostoTotal(p), fresa.getGananciasEstimadas(p));
         }
 
-        System.out.println();
+        System.out.println("\n=== PRUEBAS DE INTERFACES (POLIMORFISMO) ===");
+        System.out.println("¿Es Fresa igual a Mango?: " + fresa.equals(mango));
+        System.out.println("Comparar Fresa vs Mango (Nombre): " + fresa.compareTo(mango));
 
-        boolean eliminado = fresa.eliminarPeriodo(otonio);
-        System.out.println("Periodo 'Otoño' eliminado: " + eliminado);
-        System.out.println("Periodos restantes: " + fresa.getPeriodos().size());
+        Fruta compHectareas = new Fruta();
+        System.out.println("Comparar Extension (10ha vs 15ha): " + compHectareas.compare(fresa, mango));
     }
 }
